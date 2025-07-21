@@ -1,0 +1,19 @@
+server:
+  port: 8082
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:usersdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+jwt:
+  secret: "s2vYmrOU3H0Cz24J8LmG5j+v3wvIh3u7V9yxR+d7FXc="
+  expirationMs: 86400000
