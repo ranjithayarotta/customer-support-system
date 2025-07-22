@@ -4,6 +4,7 @@ import com.example.ticketservice.domain.TicketCommandDTO;
 import com.example.ticketservice.domain.TicketQueryDTO;
 import com.example.ticketservice.service.TicketCommandService;
 import com.example.ticketservice.service.TicketQueryService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/tickets")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
 public class TicketController {
 
     private final TicketCommandService commandService;

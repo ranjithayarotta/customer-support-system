@@ -19,8 +19,14 @@ public class JwtAuthenticationFilterOne implements WebFilter {
             "/h2-console/**",
             "/actuator/**",
             "/api/users/login",
-            "/api/users/register"
+            "/api/users/register",
+            "/swagger-ui.html",
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/v3/api-docs",
+            "/webjars/**"
     };
+
 
     private final JwtUtil jwtUtil;
 
