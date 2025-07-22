@@ -166,16 +166,16 @@ Authorization: Bearer <JWT>
 
 ## 🧰 Tech Stack
 
-| Layer        | Technology                             |
-|--------------|-----------------------------------------|
-| Gateway      | Spring Cloud Gateway                    |
-| Backend      | Spring Boot 3.x, Java 21                |
-| Persistence  | H2 (dev), Oracle/Postgres (prod)        |
-| Architecture | Hexagonal (Clean Architecture), CQRS    |
-| Security     | Spring Security, JWT                    |
-| Build        | Maven                                   |
-| API Docs     | Swagger / OpenAPI                       |
-| Monitoring   | Actuator, Prometheus, Grafana (optional)|
+| Layer        | Technology                           |
+|--------------|--------------------------------------|
+| Gateway      | Spring Cloud Gateway                 |
+| Backend      | Spring Boot 3.x, Java 21             |
+| Persistence  | H2 (dev), Oracle/Postgres (prod)     |
+| Architecture | Hexagonal (Clean Architecture), CQRS |
+| Security     | Spring Security, JWT                 |
+| Build        | Maven                                |
+| API Docs     | Swagger / OpenAPI                    |
+| Monitoring   | Actuator                             |
 
 ---
 
@@ -183,16 +183,16 @@ Authorization: Bearer <JWT>
 
 ### Prerequisites
 
-- Java 21
+- Java 20
 - Maven
-- H2 or Oracle (for production DB)
+- H2
 
 ### Steps
 
 ```bash
 # Clone the repository
-git clone <repo-url>
-cd <repo-root>
+git clone https://github.com/ranjithayarotta/customer-support-system
+cd customer-support-system
 
 # Start user-service
 cd user-service
