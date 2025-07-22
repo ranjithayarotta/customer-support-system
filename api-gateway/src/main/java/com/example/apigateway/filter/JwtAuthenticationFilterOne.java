@@ -4,11 +4,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.jwt.util.JwtUtil;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
+
+import java.util.Collections;
 
 @Component
 public class JwtAuthenticationFilterOne implements WebFilter {
@@ -60,15 +66,25 @@ public class JwtAuthenticationFilterOne implements WebFilter {
         String token = authHeader.substring(7);
         try {
             jwtUtil.validateToken(token);
-            logger.debug("Valid JWT token for path: {}", path);
+
+            String username = jwtUtil.extractUsername(token);
+            String role = jwtUtil.extractUserRole(token); // e.g., "ADMIN"
+
+            var authority = new SimpleGrantedAuthority("ROLE_" + role);
+            var auth = new UsernamePasswordAuthenticationToken(username, null, Collections.singletonList(authority));
+            var context = new SecurityContextImpl(auth);
+
+            logger.debug("Valid JWT token. User: {}, Role: {}", username, role);
+
             return chain.filter(exchange)
+                    .contextWrite(ReactiveSecurityContextHolder.withSecurityContext(Mono.just(context)))
                     .doOnSuccess(v -> logSuccess(exchange, "Authenticated access"))
                     .doOnError(e -> logError(exchange, e));
+
         } catch (Exception e) {
             logger.error("JWT validation failed for path {}: {}", path, e.getMessage());
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-            return chain.filter(exchange)
-                    .doOnSuccess(v -> logErrorResponse(exchange, "Invalid token"));
+            return exchange.getResponse().setComplete();
         }
     }
 
