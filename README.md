@@ -78,32 +78,9 @@ ticket-service/
 - Generate and validate JWT tokens
 - Admin-only user management
 
+
 #### Folder Structure
 
-
-
-H2 Dev DB:
-JDBC URL: jdbc:h2:mem:ticketdb
-
-User: sa, Password: password
-
-H2 Console: http://localhost:8081/h2-console
-
-Swagger UI: http://localhost:8081/swagger-ui/index.html
-
-ℹ️ Note: In-memory DB resets on restart. Replace with Oracle/Postgres in production.
-
-2. 👤 User Service
-   Manages user authentication, registration, and role-based access.
-
-Responsibilities:
-Register and authenticate users
-
-Generate and validate JWT tokens
-
-Admin-only user management
-
-Folder Structure:
 ```
 user-service/
 ├── configuration/
