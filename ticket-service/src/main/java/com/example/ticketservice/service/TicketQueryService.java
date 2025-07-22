@@ -1,8 +1,10 @@
 package com.example.ticketservice.service;
 
-import com.example.ticketservice.domain.Ticket;
+import com.example.ticketservice.domain.TicketQueryDTO;
+import com.example.ticketservice.mapper.TicketMapper;
 import com.example.ticketservice.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,20 +14,26 @@ import java.util.List;
 public class TicketQueryService {
 
     private final TicketRepository repository;
+    private final TicketMapper ticketMapper;
 
-    public List<Ticket> getAll() {
-        return repository.findAll();
+    public List<TicketQueryDTO> getTicketsByFilter(String status, String priority) {
+        return repository.findAll().stream()
+                .filter(ticket -> (status == null || ticket.getStatus().equals(status)))
+                .filter(ticket -> (priority == null || ticket.getPriority().equals(priority)))
+                .map(ticketMapper::toQueryDto)
+                .toList();
     }
 
-    public List<Ticket> filterByStatus(String status) {
-        return repository.findByStatus(status);
-    }
+    public List<TicketQueryDTO> getTicketsForCurrentUser() {
+        String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
 
-    public List<Ticket> filterByPriority(String priority) {
-        return repository.findByPriority(priority);
+        return repository.findBycreatedBy(currentUsername)
+                .stream()
+                .map(ticketMapper::toQueryDto)
+                .toList();
     }
-
-    public Ticket getById(Long id) {
-        return repository.findById(id).orElseThrow();
+    public TicketQueryDTO getById(Long id) {
+        return ticketMapper.toQueryDto(repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ticket not found")));
     }
 }

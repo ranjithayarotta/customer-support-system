@@ -1,4 +1,4 @@
-package com.example.ticketservice.domain;
+package com.example.ticketservice.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,9 +15,9 @@ public class Ticket {
 
     private String title;
     private String description;
-    private String status; // OPEN, IN_PROGRESS, CLOSED
+    private String status;
 
-    private String priority; // LOW, MEDIUM, HIGH
+    private String priority;
 
     private String createdBy;
 }

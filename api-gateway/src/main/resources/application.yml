@@ -4,7 +4,6 @@ server:
 spring:
   application:
     name: api-gateway
-
   cloud:
     gateway:
       routes:
@@ -12,13 +11,17 @@ spring:
           uri: http://localhost:8081
           predicates:
             - Path=/api/tickets/**
+
         - id: user-service
           uri: http://localhost:8082
           predicates:
             - Path=/api/users/**
+
 jwt:
   secret: "s2vYmrOU3H0Cz24J8LmG5j+v3wvIh3u7V9yxR+d7FXc="
   expirationMs: 86400000
+
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
+    com.example.apigateway: DEBUG

@@ -1,6 +1,8 @@
 package com.example.ticketservice.service;
 
-import com.example.ticketservice.domain.Ticket;
+import com.example.ticketservice.entity.Ticket;
+import com.example.ticketservice.domain.TicketCommandDTO;
+import com.example.ticketservice.mapper.TicketMapper;
 import com.example.ticketservice.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,23 +12,26 @@ import org.springframework.stereotype.Service;
 public class TicketCommandService {
 
     private final TicketRepository repository;
+    private final TicketMapper ticketMapper;
 
-    public Ticket createTicket(Ticket ticket) {
+    public TicketCommandDTO createTicket(TicketCommandDTO dto) {
+        Ticket ticket = ticketMapper.toEntity(dto);
         ticket.setStatus("OPEN");
-        return repository.save(ticket);
+        return ticketMapper.toCommandDto(repository.save(ticket));
     }
 
-    public Ticket updateTicket(Long id, Ticket ticket) {
-        var existing = repository.findById(id).orElseThrow();
-        existing.setTitle(ticket.getTitle());
-        existing.setDescription(ticket.getDescription());
-        existing.setPriority(ticket.getPriority());
-        return repository.save(existing);
+    public TicketCommandDTO updateTicket(Long id, TicketCommandDTO dto) {
+        Ticket existing = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ticket not found"));
+        existing.setDescription(dto.getDescription());
+        existing.setPriority(dto.getPriority());
+        return ticketMapper.toCommandDto(repository.save(existing));
     }
 
-    public void closeTicket(Long id) {
-        var ticket = repository.findById(id).orElseThrow();
+    public TicketCommandDTO closeTicket(Long id) {
+        Ticket ticket = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ticket not found"));
         ticket.setStatus("CLOSED");
-        repository.save(ticket);
+        return ticketMapper.toCommandDto(repository.save(ticket));
     }
 }
