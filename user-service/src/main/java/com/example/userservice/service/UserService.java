@@ -64,7 +64,7 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         user.setUsername(dto.getUsername());
-        user.setRole(dto.getRole().name());
+        user.setRole(dto.getRole());
         if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
             user.setPassword(passwordEncoder.encode(dto.getPassword()));
         }

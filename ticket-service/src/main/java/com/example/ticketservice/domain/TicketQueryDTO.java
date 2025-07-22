@@ -16,4 +16,6 @@ public class TicketQueryDTO {
     private String status;
     private String priority;
     private String createdBy;
+    private String description;
+
 }
