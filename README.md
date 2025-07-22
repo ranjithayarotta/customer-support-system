@@ -36,7 +36,7 @@ A Microservices-based system built with **Java 21** and **Spring Boot 3.x**, fol
 #### Folder Structure
 
 
-
+```
 ticket-service/
 ├── config/        // Swagger, Beans, etc.
 ├── controller/    // Inbound Adapters (REST APIs)
@@ -45,7 +45,7 @@ ticket-service/
 ├── mapper/        // DTO ↔ Entity Converters
 ├── repository/    // Outbound Adapters (Spring Data JPA)
 └── service/       // Application Logic
-
+```
 
 #### APIs
 
@@ -104,7 +104,7 @@ Generate and validate JWT tokens
 Admin-only user management
 
 Folder Structure:
-
+```
 user-service/
 ├── configuration/
 ├── controller/
@@ -114,7 +114,7 @@ user-service/
 ├── model/
 ├── repository/
 └── service/
-
+```
 
 #### APIs
 
