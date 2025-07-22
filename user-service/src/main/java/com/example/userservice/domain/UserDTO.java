@@ -10,6 +10,8 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class UserDTO {
 
     private Long id;
@@ -21,11 +23,7 @@ public class UserDTO {
     private String password;
 
     @NotNull(message = "Role is required")
-    private Role role;
+    private String role;
 
-    public enum Role {
-        CUSTOMER,
-        SUPPORT,
-        ADMIN
-    }
+
 }
